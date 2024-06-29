@@ -9,7 +9,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Load the data
-file_path = "/home/coder/Sachin/healthcare_data.csv"
+file_path = "/home/coder/project/healthcare_data.csv"
 df = spark.read.csv(file_path, header=True, inferSchema=True)
 
 # Data Cleaning
@@ -29,7 +29,7 @@ treatment_effectiveness_df = df_cleaned.groupBy("treatment_description") \
     .agg(count("patient_id").alias("patient_count"), sum("cost").alias("total_cost"))
 
 # Output the results
-output_path = "/home/coder/Sachin/results"
+output_path = "/home/coder/project/results"
 patient_visit_history_df.repartition(1).write.csv(os.path.join(output_path, "patient_visit_history"), mode="overwrite", header=True)
 diagnosis_analysis_df.repartition(1).write.csv(os.path.join(output_path, "diagnosis_analysis"), mode="overwrite", header=True)
 treatment_effectiveness_df.repartition(1).write.csv(os.path.join(output_path, "treatment_effectiveness"), mode="overwrite", header=True)
